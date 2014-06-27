@@ -11,8 +11,8 @@
   <body>
     <div id="#page">
     <form action="#">
-      X value: <input type= "number" name="x_value" onchange="updateX(this.value)"> <br>
-      Y value: <input type= "number" name="y_value" onchange="updateY(this.value)">
+      X value: <input type= "number" name="x_value" value="0" onchange="updateX(this.value)"> <br>
+      Y value: <input type= "number" name="y_value" value="0" onchange="updateY(this.value)">
     </form>
     <canvas id="myCanvas" width="800" height="500"
       style="border:1px solid #000000;">
@@ -28,6 +28,7 @@
 
     <script>
       //reserved
+      window.onload = prepareCanvas();
     </script>  
   </body>
 </html>

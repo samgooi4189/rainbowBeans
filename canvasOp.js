@@ -38,3 +38,73 @@ function sanitize(num, var_name){
   else
     return true;
 }
+
+/**
+ * Mouse events
+*/
+var clickX = new Array();
+var clickY = new Array();
+var clickDrag = new Array();
+var drag; 
+
+function prepareCanvas(){
+  console.log("preparing canvas");
+  var canvas = document.getElementById(default_canvas);
+  canvas.addEventListener('mousedown', MouseDown, false);
+  canvas.addEventListener('mousemove', MouseMove, false);
+  canvas.addEventListener('mouseup', MouseUp, false);
+  canvas.addEventListener('mouseleave', MouseLeave, false);
+}
+
+function MouseDown(e){
+    console.log("mouse down")
+    var mouse_x = e.pageX - this.offsetLeft;
+    var mouse_y = e.pageY - this.offsetTop;
+
+    drag = true;
+    addDrag(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+    redrawAfterDrag();
+}
+
+function MouseMove(e){
+    console.log("mouse move")
+    if(drag){
+      addDrag(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+      redrawAfterDrag();
+    }
+}
+
+function MouseUp(e){
+    drag = false;
+}
+
+function MouseLeave(e){
+    drag = false;
+}
+
+
+function addDrag(x, y, dragging){
+  clickX.push(x);
+  clickY.push(y);
+  clickDrag.push(dragging);
+}
+
+//pop element out of stack
+function popStack(targetArray){
+  if(targetArray.length != 0){
+    var element = targetArray[0];
+    targetArray.shift();
+    return element;
+  }
+  else
+    return 0;
+}
+
+function redrawAfterDrag(){
+  var context = document.getElementById(default_canvas).getContext('2d');
+  context.width = context.width;
+  context.fillStyle = default_color;
+  //context.translate(popStack(clickX), popStack(clickY));
+  redrawGraph();
+}
+
